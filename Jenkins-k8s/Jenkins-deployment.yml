@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: StatefulSet
+metadata:
+  name: jenkins
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      containers:
+        - name: jenkins
+          image: jenkins/jenkins:latest
+          ports:
+            - name: http-port
+              containerPort: 8080
+            - name: jnlp-ports
+              containerPort: 50000
+          volumeMounts:
+            - name: jenkins-home
+              mountPath: /var/jenkins_home
+         volumes:
+           - name: jenkins-home
+             emptyDir: {}
